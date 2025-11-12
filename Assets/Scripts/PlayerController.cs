@@ -1,86 +1,17 @@
-// // PlayerController2.cs
-// // Script de nueva creación: controla al personaje principal usando los ejes estándar
-// // Gestiona animaciones: Run, Jump, Attack1 y Death
-
-// using UnityEngine;
-
-// public class PlayerController2 : MonoBehaviour
-// {
-//     private SpriteRenderer spriteRenderer;
-//     private Animator animator;
-//     private Rigidbody2D rb;
-
-//     public float speed = 10.0f;
-//     public float jumpForce = 7.0f;
-
-//     void Start()
-//     {
-//         // Obtener componentes
-//         spriteRenderer = GetComponent<SpriteRenderer>();
-//         animator = GetComponent<Animator>();
-//         rb = GetComponent<Rigidbody2D>();
-//     }
-
-//     void Update()
-//     {
-//         // Obtener input horizontal
-//         float moveHorizontal = Input.GetAxisRaw("Horizontal");
-
-//         // Movimiento horizontal usando linearVelocity
-//         Vector2 velocity = rb.linearVelocity;
-//         velocity.x = moveHorizontal * speed;
-//         rb.linearVelocity = velocity;
-
-//         // Correr - Actualizar animación de correr
-//         animator.SetBool("isRunning", moveHorizontal != 0);
-
-//         // Voltear - sprite según dirección
-//         if (moveHorizontal < 0) spriteRenderer.flipX = true; // izquierda
-//         else if (moveHorizontal > 0) spriteRenderer.flipX = false; // derecha
-
-//         // Saltar - Salto con la tecla espacio
-//         if (Input.GetKeyDown(KeyCode.Space))
-//         {
-//             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-//             animator.SetBool("isJumping", true);
-//         }
-//         else if (rb.linearVelocity.y <= 0.01f)
-//         {
-//             animator.SetBool("isJumping", false);
-//         }
-
-//         // Atacar - con el tecla F
-//         if (Input.GetKeyDown(KeyCode.F))
-//         {
-//             animator.SetTrigger("attackTrigger");
-//         }
-
-//         // Morir - con la tecla M
-//         if (Input.GetKeyDown(KeyCode.M))
-//         {
-//             animator.SetBool("isDead", true);
-//         }
-//     }
-// }
-
-// PlayerController2.cs
-// Script de nueva creación: controla al personaje principal usando los ejes estándar
-// Gestiona animaciones: Run, Jump, Attack1 y Death
-
-// PlayerController2.cs
-// Script de nueva creación: controla al personaje principal usando los ejes estándar
-// Gestiona animaciones: Run, Jump, Attack1 y Death
+// reutilizar el código de PlayerController2.cs
+// Animaciones: Run, Jump, Attack1 y Death
 
 using UnityEngine;
 
-public class PlayerController2 : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rb;
 
-    public float speed = 10.0f;      // Velocidad de movimiento horizontal
-    public float jumpForce = 7.0f;   // Fuerza del salto
+    public float speed = 10.0f;
+    // que no permite saltar más alto - mas que enemigos
+    public float jumpForce = 20.0f;
 
     void Start()
     {
@@ -92,22 +23,22 @@ public class PlayerController2 : MonoBehaviour
 
     void Update()
     {
-        // Movimiento horizontal usando los ejes estándar
+        // Obtener input horizontal
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
 
-        // Aplicar movimiento horizontal con linearVelocity
+        // Movimiento horizontal usando linearVelocity
         Vector2 velocity = rb.linearVelocity;
         velocity.x = moveHorizontal * speed;
         rb.linearVelocity = velocity;
 
-        // Animación de correr
+        // Correr - Actualizar animación de correr
         animator.SetBool("isRunning", moveHorizontal != 0);
 
-        // Voltear sprite según dirección
-        if (moveHorizontal < 0) spriteRenderer.flipX = false; // izquierda
-        else if (moveHorizontal > 0) spriteRenderer.flipX = true; // derecha
+        // Voltear - sprite según dirección
+        if (moveHorizontal < 0) spriteRenderer.flipX = true; // izquierda
+        else if (moveHorizontal > 0) spriteRenderer.flipX = false; // derecha
 
-        // Salto con Space
+        // Saltar - Salto con la tecla espacio
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
@@ -118,16 +49,17 @@ public class PlayerController2 : MonoBehaviour
             animator.SetBool("isJumping", false);
         }
 
-        // Ataque con J
-        if (Input.GetKeyDown(KeyCode.J))
+        // Atacar - con el tecla X
+        if (Input.GetKeyDown(KeyCode.X))
         {
             animator.SetTrigger("attackTrigger");
         }
 
-        // Muerte con K (solo ejemplo)
-        if (Input.GetKeyDown(KeyCode.K))
+        // Morir - con la tecla M
+        if (Input.GetKeyDown(KeyCode.M))
         {
             animator.SetBool("isDead", true);
         }
     }
 }
+
